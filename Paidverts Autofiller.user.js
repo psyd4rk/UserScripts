@@ -15,7 +15,7 @@
 // ==/UserScript==
 
 
-//Settings: http://uncertified-robot.github.io/UserScripts/PV.html
+//Settings: http://uncertified-robot.github.io/UserScripts/PVSettings.html
 
 
 
@@ -51,7 +51,7 @@ evt.initEvent("click", true, true);
 $(document).ready(function(){
     
     
-    if(document.location.href=="http://uncertified-robot.github.io/UserScripts/PV.html"){
+    if(document.location.href=="http://uncertified-robot.github.io/UserScripts/PVSettings.html"){
         $("#sound").prop("checked", GM_getValue("sound"));
         $("#autoselect").prop("checked", GM_getValue("autoselect"));
         $("#newTab").prop("checked", GM_getValue("newtab"));
