@@ -7,7 +7,7 @@
 // @include     http://Uncertified-Robot.github.io/UserScripts/*
 // @copyright   2015+, Uncertified Robot
 // @namespace  https://github.com/Uncertified-Robot
-// @version    1.2.0.1
+// @version    1.2.0.2
 // @updateURL   https://raw.githubusercontent.com/Uncertified-Robot/UserScripts/master/Paidverts%20Autofiller.user.js
 // @downloadURL     https://raw.githubusercontent.com/Uncertified-Robot/UserScripts/master/Paidverts%20Autofiller.user.js
 // @grant GM_setValue
@@ -63,7 +63,6 @@ $(document).ready(function(){
         $("#newTab").prop("checked", GM_getValue("newtab"));
         $("#autorefresh").prop("checked", GM_getValue("autorefresh"));
         $("#alert").val(GM_getValue("alertSound"));
-
         document.getElementById("interval").value= GM_getValue("interval");
         
         $("#save").click(function(){
@@ -123,11 +122,10 @@ $(document).ready(function(){
         }
         document.getElementById('view_ad').dispatchEvent(evt);
         if(document.getElementById("text-3") != undefined){
-        var viewBtn = document.getElementById("text-3");
-        viewBtn.scrollIntoView(true);
+            var viewBtn = document.getElementById("text-3");
+            viewBtn.scrollIntoView(true);
         }
         if(newTab === true){
-            
             window.close(url);
         }
         
