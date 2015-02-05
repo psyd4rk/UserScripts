@@ -7,7 +7,7 @@
 // @include     http://uncertified-robot.github.io/UserScripts/*
 // @copyright   2015+, Uncertified Robot
 // @namespace  https://github.com/Uncertified-Robot
-// @version    1.0.0.0
+// @version    1.0.0.1
 // @updateURL https://raw.githubusercontent.com/Uncertified-Robot/UserScripts/master/Paidverts%20Autofiller.user.js
 // @downloadURL https://raw.githubusercontent.com/Uncertified-Robot/UserScripts/master/Paidverts%20Autofiller.user.js
 // @grant GM_setValue
