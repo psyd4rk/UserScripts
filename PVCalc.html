@@ -1,0 +1,64 @@
+<html>
+<head>
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+
+  <style type="text/css">
+  #msg{
+    transition: 2s;
+  }
+  
+  .clrd{
+    background: #D3D3D3;
+    
+  }
+  table, th, td {
+    border: 1px solid black;
+    border-collapse: collapse;
+}
+  </style>
+
+  <script type="text/javascript">
+    function bapToCash(){
+      var bap = $("#bap").val() ;
+      var cashPerBap = 1.55/1600;
+      var cash = bap*cashPerBap;
+      $("#cash").val(cash);
+
+
+
+    }
+
+    function cashToBap(){
+      var cash = $("#cash").val() ;
+      var cashPerBap = 1.55/1600;
+      var bap = cash/cashPerBap;
+      $("#bap").val(bap);
+
+
+
+    }
+
+
+  </script>
+</head>
+
+
+<body>
+  <h3>BAP <-> Cash Calculator</h3>
+  <table>
+
+    <tr> 
+      <th>BAP Amount</th>
+      <th>Cash Value</th>
+    </tr>
+
+    <tr class="clrd">
+      <td><input type="number" id="bap" oninput="bapToCash()" onchange="bapToCash()" min="0" step="1"></input></td>
+      <td><input type="number" id="cash" oninput="cashToBap()" onchange="cashToBap()" min="0" step="0.00001"></input></td>
+    </tr>
+  </table>
+
+
+</body>
+
+</html>
