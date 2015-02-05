@@ -72,8 +72,7 @@ $(document).ready(function(){
             var newTab = $("#newTab").is(":checked");
             var autoRefresh = $("#autorefresh").is(":checked");
             var interval = document.getElementById("interval").value;
-            var alertSound = $("#alert").find('option:selected');
-            
+            var alertSound = $("#alert").find('option:selected').val();
             GM_setValue("sound",sound);
             GM_setValue("autoselect",autoselect);
             GM_setValue("newtab",newTab);
@@ -137,7 +136,7 @@ $(document).ready(function(){
     if(document.location.href.indexOf("/member/paid_ads_view_") > -1){
         if(sound === true){
             setTimeout(function() {
-                var snd = new Audio("uncertified-robot.github.io/UserScripts/sounds/"+alertSound); //45k+ less characters. Yay
+                var snd = new Audio("http://uncertified-robot.github.io/UserScripts/sounds/"+alertSound); //45k+ less characters. Yay
                 snd.play();
             }, 30000);
         }
