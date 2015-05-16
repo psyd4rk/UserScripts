@@ -18,8 +18,8 @@ var minSatoshi = 1; //1 satoshi = 10 of those things you get on the site.
 
 
 $(document).ready(function(){
+    minSatoshi= minSatoshi*0.00000001;
     function collect(){
-        minSatoshi= minSatoshi*0.00000001;
         if(parseFloat(document.getElementById('timer').innerText)> minSatoshi){
             if(document.getElementById('timer').innerText.slice(-1)=="0"){
                 console.log("Collecting");
