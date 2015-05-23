@@ -3,6 +3,11 @@ Userscripts
 
 Userscripts to automate all the things!  
 
+Paidverts
+============
+
+After installing the Paidverts userscript, head over to the [settings page](http://uncertified-robot.github.io/UserScripts/PVSettings.html) and configure it to your needs.
+
 
 Donate
 ============
