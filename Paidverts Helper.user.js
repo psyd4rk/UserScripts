@@ -1,13 +1,13 @@
 // ==UserScript==
-// @name        Paidverts Autofiller
-// @description This will automatically fill in the 3 text captcha's and open the ad!
+// @name        Paidverts Helper
+// @description This userscript will speed up the process of browsing ads on Paidverts. It will also assist you in doing so.
 // @include     http://paidverts.com/member/*
 // @include     http://www.paidverts.com/member/*
 // @include     https://www.paidverts.com/member/*
 // @include     http://Uncertified-Robot.github.io/UserScripts/*
 // @copyright   2015+, Uncertified Robot
 // @namespace  https://github.com/Uncertified-Robot
-// @version    1.2.1.0
+// @version    1.2.1.1
 // @updateURL   https://raw.githubusercontent.com/Uncertified-Robot/UserScripts/master/Paidverts%20Autofiller.user.js
 // @downloadURL     https://raw.githubusercontent.com/Uncertified-Robot/UserScripts/master/Paidverts%20Autofiller.user.js
 // @grant GM_setValue
