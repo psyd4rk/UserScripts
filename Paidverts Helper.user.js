@@ -1,13 +1,13 @@
 // ==UserScript==
-// @name        Paidverts Helper
-// @description This userscript will speed up the process of browsing ads on Paidverts. It will also assist you in doing so.
+// @name        Paidverts Autofiller
+// @description This will automatically fill in the 3 text captcha's and open the ad!
 // @include     http://paidverts.com/member/*
 // @include     http://www.paidverts.com/member/*
 // @include     https://www.paidverts.com/member/*
 // @include     http://Uncertified-Robot.github.io/UserScripts/*
 // @copyright   2015+, Uncertified Robot
 // @namespace  https://github.com/Uncertified-Robot
-// @version    1.2.1.1
+// @version    1.2.2.0
 // @updateURL   https://raw.githubusercontent.com/Uncertified-Robot/UserScripts/master/Paidverts%20Autofiller.user.js
 // @downloadURL     https://raw.githubusercontent.com/Uncertified-Robot/UserScripts/master/Paidverts%20Autofiller.user.js
 // @grant GM_setValue
@@ -21,6 +21,14 @@
 
 /////////////////////////////////////////CODE - DO NOT TOUCH ANYTHING BELOW THIS/////////////////////////////////////////
 
+//Default settings.
+var sound = true;
+var autoselect = true;
+var newTab = false;
+var autoRefresh = false;
+var interval = 35;
+var alertSound="SCII.wav";
+var autoClose = false;
 
 if(GM_getValue("firstTime") === undefined){
     alert("Thank you for installing Paidverts Autofiller!");
@@ -32,22 +40,17 @@ if(GM_getValue("firstTime") === undefined){
     GM_setValue("autorefresh",false);
     GM_setValue("interval",35);
     GM_setValue("alertSound","SCII.wav");
+    GM_setValue("autoClose",false);
 
-    
-    var sound = true;
-    var autoselect = true;
-    var newTab = false;
-    var autoRefresh = false;
-    var interval = 35;
-    var alertSound="SCII.wav";
-}else{
-    var sound = GM_getValue("sound");
-    var autoselect = GM_getValue("autoselect");
-    var newTab = GM_getValue("newtab");
-    var autoRefresh = GM_getValue("autorefresh");
-    var interval = GM_getValue("interval");
-    var alertSound = GM_getValue("alertSound");
 }
+var sound = GM_getValue("sound");
+var autoselect = GM_getValue("autoselect");
+var newTab = GM_getValue("newtab");
+var autoRefresh = GM_getValue("autorefresh");
+var interval = GM_getValue("interval");
+var alertSound = GM_getValue("alertSound");
+var autoClose = GM_getValue("autoClose");
+
 
 
 
@@ -55,8 +58,8 @@ if(GM_getValue("firstTime") === undefined){
 var evt = document.createEvent("HTMLEvents");
 evt.initEvent("click", true, true);
 $(document).ready(function(){
-    
-    
+
+
     if(document.location.href=="http://uncertified-robot.github.io/UserScripts/PVSettings.html"){
         $("#sound").prop("checked", GM_getValue("sound"));
         $("#autoselect").prop("checked", GM_getValue("autoselect"));
@@ -64,7 +67,8 @@ $(document).ready(function(){
         $("#autorefresh").prop("checked", GM_getValue("autorefresh"));
         $("#alert").val(GM_getValue("alertSound"));
         document.getElementById("interval").value= GM_getValue("interval");
-        
+        $("#autoClose").prop("checked", GM_getValue("autoClose"));
+
         $("#save").click(function(){
             var sound = $("#sound").is(":checked");
             var autoselect = $("#autoselect").is(":checked");
@@ -72,31 +76,39 @@ $(document).ready(function(){
             var autoRefresh = $("#autorefresh").is(":checked");
             var interval = document.getElementById("interval").value;
             var alertSound = $("#alert").find('option:selected').val();
+            var autoClose = $("#autoClose").is(":checked");
             GM_setValue("sound",sound);
             GM_setValue("autoselect",autoselect);
             GM_setValue("newtab",newTab);
             GM_setValue("autorefresh",autoRefresh);
             GM_setValue("interval",interval);
             GM_setValue("alertSound",alertSound);
-            
-           
+            GM_setValue("autoClose",autoClose);
+
+
+
             $("#msg").css("background", "#2ecc71") 
             $("#msg").css("border", "1px #27ae60 solid");
             $("#msg").text("Settings succesfully saved!");
-            
+            setTimeout(function() {
+                $("#msg").css("background", "") 
+                $("#msg").css("border", "");
+                $("#msg").text("");
+            },5000);
+
         });
     }
-    
-    
+
+
     if(document.location.href.indexOf("/paid_ads.html") > -1){
-        
+
         if(newTab === true){
             $( "a:contains('order by')" ).click(function() {
                 $(".view").attr("target", "_BLANK");
             });
-            
+
             $('.view').attr("target", "_BLANK");
-            
+
         }
         if(autoselect === true){
             document.getElementById('worth').scrollIntoView(true);
@@ -107,16 +119,16 @@ $(document).ready(function(){
                 document.getElementById('view-1').dispatchEvent(evt);
             }
         }
-        
+
         if(autoRefresh===true){
             setTimeout(function(){location.reload();},interval*1000);
         }
     }
-    
+
     if(document.location.href.indexOf("paidverts.com/member/paid_ads_interaction") > -1 || document.location.href.indexOf("paidverts.com/member/activation_ad.html") > -1){
         document.getElementById('copy-1').dispatchEvent(evt);
         if(document.getElementById('copy-3') != undefined){
-            
+
             document.getElementById('copy-2').dispatchEvent(evt);
             document.getElementById('copy-3').dispatchEvent(evt);
         }
@@ -128,24 +140,29 @@ $(document).ready(function(){
         if(newTab === true){
             window.close(url);
         }
-        
+
     }
-    
+
     if(document.location.href.indexOf("/member/paid_ads_view_") > -1){
+        if(autoClose===true){
+            $("#button").click(function(){
+                setTimeout(function(){
+                    $("#closeBtn").click();
+                },500);
+            });
+        }
+        var timeout = document.getElementById("seconds").innerText;
+        if(timeout.indexOf("econd") > -1 ){
+            timeout = parseInt(timeout)*1000;
+        }else{
+            timeout = 30000;
+        }
         if(sound === true){
-            
-            var timeout = document.getElementById("seconds").innerText;
-            if(timeout.indexOf("econd") > -1 ){
-                timeout = parseInt(timeout)*1000;
-            }else{
-                timeout = 30000;
-            }
             setTimeout(function() {
-                
-                var snd = new Audio("http://uncertified-robot.github.io/UserScripts/sounds/"+alertSound); //45k+ less characters. Yay
+
+                var snd = new Audio("http://uncertified-robot.github.io/UserScripts/sounds/"+alertSound); 
                 snd.play();
             }, timeout);
         }
-        
     }
 });
