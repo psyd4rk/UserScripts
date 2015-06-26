@@ -7,7 +7,7 @@
 // @include     http://Uncertified-Robot.github.io/UserScripts/*
 // @copyright   2015+, Uncertified Robot
 // @namespace  https://github.com/Uncertified-Robot
-// @version    1.2.2.0
+// @version    1.2.3.0
 // @updateURL   https://raw.githubusercontent.com/Uncertified-Robot/UserScripts/master/Paidverts%20Autofiller.user.js
 // @downloadURL     https://raw.githubusercontent.com/Uncertified-Robot/UserScripts/master/Paidverts%20Autofiller.user.js
 // @grant GM_setValue
@@ -52,8 +52,9 @@ var alertSound = GM_getValue("alertSound");
 var autoClose = GM_getValue("autoClose");
 
 
+GM_setValue("autogrid",false);
 
-
+console.log("UC Autofiller running!");
 
 var evt = document.createEvent("HTMLEvents");
 evt.initEvent("click", true, true);
@@ -97,6 +98,22 @@ $(document).ready(function(){
             },5000);
 
         });
+
+        $("#reset").click(function(){
+            GM_setValue("firstTime", false);
+            GM_setValue("sound",true);
+            GM_setValue("autoselect",true);
+            GM_setValue("newtab",false);
+            GM_setValue("autorefresh",false);
+            GM_setValue("interval",35);
+            GM_setValue("alertSound","SCII.wav");
+            GM_setValue("autoClose",false);
+            GM_setValue("autogrid",false);
+            $("#msg").css("background", "#ff0000") 
+            $("#msg").css("border", "1px #27ae60 solid");
+            $("#msg").text("Settings succesfully reset!");
+
+        });
     }
 
 
@@ -111,12 +128,14 @@ $(document).ready(function(){
 
         }
         if(autoselect === true){
-            document.getElementById('worth').scrollIntoView(true);
-            if(newTab===true){
-                var url = $('#view-1').attr("href");
-                var newWindow = window.open(url); 
-            }else{
-                document.getElementById('view-1').dispatchEvent(evt);
+            if($("#worth")[0]!=undefined){
+                document.getElementById('worth').scrollIntoView(true);
+                if(newTab===true){
+                    var url = $('#view-1').attr("href");
+                    var newWindow = window.open(url); 
+                }else{
+                    document.getElementById('view-1').dispatchEvent(evt);
+                }
             }
         }
 
@@ -132,14 +151,17 @@ $(document).ready(function(){
             document.getElementById('copy-2').dispatchEvent(evt);
             document.getElementById('copy-3').dispatchEvent(evt);
         }
-        document.getElementById('view_ad').dispatchEvent(evt);
         if(document.getElementById("text-3") != undefined){
             var viewBtn = document.getElementById("text-3");
             viewBtn.scrollIntoView(true);
         }
-        if(newTab === true){
+        document.getElementById('view_ad').dispatchEvent(evt);
+        if(newTab === true && GM_getValue("autogrid")===false){
             window.close(url);
+            GM_setValue("autogrid",false);
         }
+
+        GM_setValue("autogrid",false);
 
     }
 
@@ -147,7 +169,11 @@ $(document).ready(function(){
         if(autoClose===true){
             $("#button").click(function(){
                 setTimeout(function(){
-                    $("#closeBtn").click();
+                    if($("#closeBtn")[0] != undefined){
+                        $("#closeBtn").click();
+                    }else{
+                        $("#playGridAgn").click();
+                    }
                 },500);
             });
         }
@@ -164,5 +190,16 @@ $(document).ready(function(){
                 snd.play();
             }, timeout);
         }
+    }
+
+    if(document.location.href.indexOf("/member/games/grid.html") > -1){
+        var playable = $("td.playGameLink");
+        var chances = parseInt($(".chances")[0].innerText);
+        if(chances>=1){
+            GM_setValue("autogrid",true);
+            cellOver(playable[0]);
+            playable[0].click();
+        }
+
     }
 });
