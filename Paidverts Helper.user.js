@@ -7,7 +7,7 @@
 // @include     http://Uncertified-Robot.github.io/UserScripts/*
 // @copyright   2015+, Uncertified Robot
 // @namespace  https://github.com/Uncertified-Robot
-// @version    1.2.3.1
+// @version    1.2.4.0
 // @updateURL   https://raw.githubusercontent.com/Uncertified-Robot/UserScripts/master/Paidverts%20Autofiller.user.js
 // @downloadURL     https://raw.githubusercontent.com/Uncertified-Robot/UserScripts/master/Paidverts%20Autofiller.user.js
 // @grant GM_setValue
@@ -27,7 +27,6 @@ var sound = true;
 var autoselect = true;
 var newTab = false;
 var autoRefresh = false;
-var interval = 35;
 var alertSound="SCII.wav";
 var autoClose = false;
 
@@ -39,7 +38,6 @@ if(GM_getValue("firstTime") === undefined){
     GM_setValue("autoselect",true);
     GM_setValue("newtab",false);
     GM_setValue("autorefresh",false);
-    GM_setValue("interval",35);
     GM_setValue("alertSound","SCII.wav");
     GM_setValue("autoClose",false);
 
@@ -48,7 +46,6 @@ var sound = GM_getValue("sound");
 var autoselect = GM_getValue("autoselect");
 var newTab = GM_getValue("newtab");
 var autoRefresh = GM_getValue("autorefresh");
-var interval = GM_getValue("interval");
 var alertSound = GM_getValue("alertSound");
 var autoClose = GM_getValue("autoClose");
 
@@ -59,6 +56,15 @@ console.log("UC Autofiller running!");
 var evt = document.createEvent("HTMLEvents");
 evt.initEvent("click", true, true);
 
+function checkReload(){
+    if(localStorage.getItem("ucaf.reload")=="true"){
+        localStorage.setItem("ucaf.reload", false);
+        location.reload();
+    }else{
+        setTimeout(function(){checkReload();},1000);
+    }
+}
+
 $(document).ready(function(){
 
 
@@ -68,7 +74,6 @@ $(document).ready(function(){
         $("#newTab").prop("checked", GM_getValue("newtab"));
         $("#autorefresh").prop("checked", GM_getValue("autorefresh"));
         $("#alert").val(GM_getValue("alertSound"));
-        document.getElementById("interval").value= GM_getValue("interval");
         $("#autoClose").prop("checked", GM_getValue("autoClose"));
 
         $("#save").click(function(){
@@ -76,14 +81,12 @@ $(document).ready(function(){
             var autoselect = $("#autoselect").is(":checked");
             var newTab = $("#newTab").is(":checked");
             var autoRefresh = $("#autorefresh").is(":checked");
-            var interval = document.getElementById("interval").value;
             var alertSound = $("#alert").find('option:selected').val();
             var autoClose = $("#autoClose").is(":checked");
             GM_setValue("sound",sound);
             GM_setValue("autoselect",autoselect);
             GM_setValue("newtab",newTab);
             GM_setValue("autorefresh",autoRefresh);
-            GM_setValue("interval",interval);
             GM_setValue("alertSound",alertSound);
             GM_setValue("autoClose",autoClose);
 
@@ -106,7 +109,6 @@ $(document).ready(function(){
             GM_setValue("autoselect",true);
             GM_setValue("newtab",false);
             GM_setValue("autorefresh",false);
-            GM_setValue("interval",35);
             GM_setValue("alertSound","SCII.wav");
             GM_setValue("autoClose",false);
             $("#msg").css("background", "#ff0000");
@@ -140,7 +142,8 @@ $(document).ready(function(){
         }
 
         if(autoRefresh===true){
-            setTimeout(function(){location.reload();},interval*1000);
+
+            checkReload();
         }
     }
 
@@ -158,7 +161,7 @@ $(document).ready(function(){
 
         document.getElementById('view_ad').dispatchEvent(evt);
         if(newTab === true && localStorage.getItem("ucaf.clickgrid") === "false"){
-            window.close(url);
+            window.close();
         }
 
         localStorage.setItem("ucaf.clickgrid", false);
@@ -168,8 +171,11 @@ $(document).ready(function(){
     if(document.location.href.indexOf("/member/paid_ads_view_") > -1){
         if(autoClose===true){
             $("#button").click(function(){
+                if(typeof(Storage) !== "undefined") {
+                    localStorage.setItem("ucaf.reload", true);
+                }
                 setTimeout(function(){
-                    if($("#closeBtn")[0] != undefined){
+                    if($("#closeBtn")[0] !== undefined){
                         $("#closeBtn").click();
                     }else{
                         $("#playGridAgn").click();
@@ -199,7 +205,6 @@ $(document).ready(function(){
 
             if(typeof(Storage) !== "undefined") {
                 localStorage.setItem("ucaf.clickgrid", true);
-            } else {
             }
 
             cellOver(playable[0]);
