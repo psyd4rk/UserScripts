@@ -7,7 +7,7 @@
 // @include     http://Uncertified-Robot.github.io/UserScripts/*
 // @copyright   2015+, Uncertified Robot
 // @namespace  https://github.com/Uncertified-Robot
-// @version    1.2.4.1
+// @version    1.2.5.0
 // @updateURL   https://raw.githubusercontent.com/Uncertified-Robot/UserScripts/master/Paidverts%20Autofiller.user.js
 // @downloadURL     https://raw.githubusercontent.com/Uncertified-Robot/UserScripts/master/Paidverts%20Autofiller.user.js
 // @grant GM_setValue
@@ -66,7 +66,13 @@ function checkReload(){
 }
 
 $(document).ready(function(){
-
+    setTimeout(function(){
+        if(document.location.href.indexOf("paidverts") > -1){
+            if($("#totalPaidAds")[0].innerText != "0"){
+                document.title="(" + $("#totalPaidAds")[0].innerText + ") " + document.title;
+            }
+        }
+    },100);
 
     if(document.location.href=="http://uncertified-robot.github.io/UserScripts/PVSettings.html"){
         $("#sound").prop("checked", GM_getValue("sound"));
@@ -184,9 +190,10 @@ $(document).ready(function(){
                 },500);
             });
         }
+        
         var timeout = document.getElementById("seconds").innerText;
         if(timeout.indexOf("econd") > -1 ){
-            timeout = parseInt(timeout)*1000;
+            timeout = parseInt(timeout)*1000-1000;
         }else{
             timeout = 30000;
         }
