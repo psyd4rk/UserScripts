@@ -7,7 +7,7 @@
 // @include     http://Uncertified-Robot.github.io/UserScripts/*
 // @copyright   2015+, Uncertified Robot
 // @namespace  https://github.com/Uncertified-Robot
-// @version    1.2.5.0
+// @version    1.2.6.0
 // @updateURL   https://raw.githubusercontent.com/Uncertified-Robot/UserScripts/master/Paidverts%20Autofiller.user.js
 // @downloadURL     https://raw.githubusercontent.com/Uncertified-Robot/UserScripts/master/Paidverts%20Autofiller.user.js
 // @grant GM_setValue
@@ -31,15 +31,15 @@ var alertSound="SCII.wav";
 var autoClose = false;
 
 if(GM_getValue("firstTime") === undefined){
-    alert("Thank you for installing Paidverts Autofiller!");
-    alert("You can change the settings at: http://uncertified-robot.github.io/UserScripts/PVSettings.html");
-    GM_setValue("firstTime", false);
-    GM_setValue("sound",true);
-    GM_setValue("autoselect",true);
-    GM_setValue("newtab",false);
-    GM_setValue("autorefresh",false);
-    GM_setValue("alertSound","SCII.wav");
-    GM_setValue("autoClose",false);
+	alert("Thank you for installing Paidverts Autofiller!");
+	alert("You can change the settings at: http://uncertified-robot.github.io/UserScripts/PVSettings.html");
+	GM_setValue("firstTime", false);
+	GM_setValue("sound",true);
+	GM_setValue("autoselect",true);
+	GM_setValue("newtab",false);
+	GM_setValue("autorefresh",false);
+	GM_setValue("alertSound","SCII.wav");
+	GM_setValue("autoClose",false);
 
 }
 var sound = GM_getValue("sound");
@@ -57,167 +57,170 @@ var evt = document.createEvent("HTMLEvents");
 evt.initEvent("click", true, true);
 
 function checkReload(){
-    if(localStorage.getItem("ucaf.reload")=="true"){
-        localStorage.setItem("ucaf.reload", false);
-        location.reload();
-    }else{
-        setTimeout(function(){checkReload();},1000);
-    }
+	if(localStorage.getItem("ucaf.reload")=="true"){
+		localStorage.setItem("ucaf.reload", false);
+		location.reload();
+	}else{
+		setTimeout(function(){checkReload();},1000);
+	}
 }
 
 $(document).ready(function(){
-    setTimeout(function(){
-        if(document.location.href.indexOf("paidverts") > -1){
-            if($("#totalPaidAds")[0].innerText != "0"){
-                document.title="(" + $("#totalPaidAds")[0].innerText + ") " + document.title;
-            }
-        }
-    },100);
+	setTimeout(function(){
+		if(document.location.href.indexOf("paidverts") > -1){
+			if($("#totalPaidAds")[0].innerText != "0"){
+				document.title="(" + $("#totalPaidAds")[0].innerText + ") " + document.title;
+			}
+		}
+	},100);
 
-    if(document.location.href=="http://uncertified-robot.github.io/UserScripts/PVSettings.html"){
-        $("#sound").prop("checked", GM_getValue("sound"));
-        $("#autoselect").prop("checked", GM_getValue("autoselect"));
-        $("#newTab").prop("checked", GM_getValue("newtab"));
-        $("#autorefresh").prop("checked", GM_getValue("autorefresh"));
-        $("#alert").val(GM_getValue("alertSound"));
-        $("#autoClose").prop("checked", GM_getValue("autoClose"));
+	if(document.location.href=="http://uncertified-robot.github.io/UserScripts/PVSettings.html"){
+		$("#sound").prop("checked", GM_getValue("sound"));
+		$("#autoselect").prop("checked", GM_getValue("autoselect"));
+		$("#newTab").prop("checked", GM_getValue("newtab"));
+		$("#autorefresh").prop("checked", GM_getValue("autorefresh"));
+		$("#alert").val(GM_getValue("alertSound"));
+		$("#autoClose").prop("checked", GM_getValue("autoClose"));
 
-        $("#save").click(function(){
-            var sound = $("#sound").is(":checked");
-            var autoselect = $("#autoselect").is(":checked");
-            var newTab = $("#newTab").is(":checked");
-            var autoRefresh = $("#autorefresh").is(":checked");
-            var alertSound = $("#alert").find('option:selected').val();
-            var autoClose = $("#autoClose").is(":checked");
-            GM_setValue("sound",sound);
-            GM_setValue("autoselect",autoselect);
-            GM_setValue("newtab",newTab);
-            GM_setValue("autorefresh",autoRefresh);
-            GM_setValue("alertSound",alertSound);
-            GM_setValue("autoClose",autoClose);
-
-
-
-            $("#msg").css("background", "#2ecc71");
-            $("#msg").css("border", "1px #27ae60 solid");
-            $("#msg").text("Settings succesfully saved!");
-            setTimeout(function() {
-                $("#msg").css("background", "");
-                $("#msg").css("border", "");
-                $("#msg").text("");
-            },5000);
-
-        });
-
-        $("#reset").click(function(){
-            GM_setValue("firstTime", false);
-            GM_setValue("sound",true);
-            GM_setValue("autoselect",true);
-            GM_setValue("newtab",false);
-            GM_setValue("autorefresh",false);
-            GM_setValue("alertSound","SCII.wav");
-            GM_setValue("autoClose",false);
-            $("#msg").css("background", "#ff0000");
-            $("#msg").css("border", "1px #27ae60 solid");
-            $("#msg").text("Settings succesfully reset!");
-
-        });
-    }
+		$("#save").click(function(){
+			var sound = $("#sound").is(":checked");
+			var autoselect = $("#autoselect").is(":checked");
+			var newTab = $("#newTab").is(":checked");
+			var autoRefresh = $("#autorefresh").is(":checked");
+			var alertSound = $("#alert").find('option:selected').val();
+			var autoClose = $("#autoClose").is(":checked");
+			GM_setValue("sound",sound);
+			GM_setValue("autoselect",autoselect);
+			GM_setValue("newtab",newTab);
+			GM_setValue("autorefresh",autoRefresh);
+			GM_setValue("alertSound",alertSound);
+			GM_setValue("autoClose",autoClose);
 
 
-    if(document.location.href.indexOf("/paid_ads.html") > -1){
 
-        if(newTab === true){
-            $( "a:contains('order by')" ).click(function() {
-                $(".view").attr("target", "_BLANK");
-            });
+			$("#msg").css("background", "#2ecc71");
+			$("#msg").css("border", "1px #27ae60 solid");
+			$("#msg").text("Settings succesfully saved!");
+			setTimeout(function() {
+				$("#msg").css("background", "");
+				$("#msg").css("border", "");
+				$("#msg").text("");
+			},5000);
 
-            $('.view').attr("target", "_BLANK");
+		});
 
-        }
-        if(autoselect === true){
-            if($("#worth")[0]!==undefined){
-                document.getElementById('worth').scrollIntoView(true);
-                if(newTab===true){
-                    var url = $('#view-1').attr("href");
-                    var newWindow = window.open(url); 
-                }else{
-                    document.getElementById('view-1').dispatchEvent(evt);
-                }
-            }
-        }
+		$("#reset").click(function(){
+			GM_setValue("firstTime", false);
+			GM_setValue("sound",true);
+			GM_setValue("autoselect",true);
+			GM_setValue("newtab",false);
+			GM_setValue("autorefresh",false);
+			GM_setValue("alertSound","SCII.wav");
+			GM_setValue("autoClose",false);
+			$("#msg").css("background", "#ff0000");
+			$("#msg").css("border", "1px #27ae60 solid");
+			$("#msg").text("Settings succesfully reset!");
 
-        if(autoRefresh===true){
+		});
+	}
 
-            checkReload();
-        }
-    }
 
-    if(document.location.href.indexOf("paidverts.com/member/paid_ads_interaction") > -1 || document.location.href.indexOf("paidverts.com/member/activation_ad.html") > -1){
-        document.getElementById('copy-1').dispatchEvent(evt);
-        if(document.getElementById('copy-3') !== undefined){
+	if(document.location.href.indexOf("/paid_ads.html") > -1){
 
-            document.getElementById('copy-2').dispatchEvent(evt);
-            document.getElementById('copy-3').dispatchEvent(evt);
-        }
-        if(document.getElementById("text-3") !== undefined){
-            var viewBtn = document.getElementById("text-3");
-            viewBtn.scrollIntoView(true);
-        }
+		localStorage.setItem("ucaf.reload", false);
+		if(newTab === true){
+			$( "a:contains('order by')" ).click(function() {
+				$(".view").attr("target", "_BLANK");
+			});
 
-        document.getElementById('view_ad').dispatchEvent(evt);
-        if(newTab === true && localStorage.getItem("ucaf.clickgrid") === "false"){
-            window.close();
-        }
+			$('.view').attr("target", "_BLANK");
 
-        localStorage.setItem("ucaf.clickgrid", false);
+		}
+		if(autoselect === true){
+			if($("#worth")[0]!==undefined){
+				document.getElementById('worth').scrollIntoView(true);
+				if(newTab===true){
+					var url = $('#view-1').attr("href");
+					var newWindow = window.open(url); 
+				}else{
+					document.getElementById('view-1').dispatchEvent(evt);
+				}
+			}
+		}
 
-    }
+		if(autoRefresh===true){
 
-    if(document.location.href.indexOf("/member/paid_ads_view_") > -1){
-        if(autoClose===true){
-            $("#button").click(function(){
+			checkReload();
+		}
+	}
 
-                setTimeout(function(){
-                    if($("#closeBtn")[0] !== undefined){
-                        $("#closeBtn").click();
-                        if(typeof(Storage) !== "undefined") {
-                            localStorage.setItem("ucaf.reload", true);
-                        }
-                    }else{
-                        $("#playGridAgn").click();
-                    }
-                },500);
-            });
-        }
-        
-        var timeout = document.getElementById("seconds").innerText;
-        if(timeout.indexOf("econd") > -1 ){
-            timeout = parseInt(timeout)*1000-1000;
-        }else{
-            timeout = 30000;
-        }
-        if(sound === true){
-            setTimeout(function() {
+	if(document.location.href.indexOf("paidverts.com/member/paid_ads_interaction") > -1 || document.location.href.indexOf("paidverts.com/member/activation_ad.html") > -1){
+		document.getElementById('copy-1').dispatchEvent(evt);
+		if(document.getElementById('copy-3') !== undefined){
 
-                var snd = new Audio("http://uncertified-robot.github.io/UserScripts/sounds/"+alertSound); 
-                snd.play();
-            }, timeout);
-        }
-    }
+			document.getElementById('copy-2').dispatchEvent(evt);
+			document.getElementById('copy-3').dispatchEvent(evt);
+		}
+		if(document.getElementById("text-3") !== undefined){
+			var viewBtn = document.getElementById("text-3");
+			viewBtn.scrollIntoView(true);
+		}
 
-    if(document.location.href.indexOf("/member/games/grid.html") > -1){
-        var playable = $("td.playGameLink");
-        var chances = parseInt($(".chances")[0].innerText);
-        if(chances>=1){
+		document.getElementById('view_ad').dispatchEvent(evt);
+		if(newTab === true && localStorage.getItem("ucaf.clickgrid") === "false"){
+			window.close();
+		}
 
-            if(typeof(Storage) !== "undefined") {
-                localStorage.setItem("ucaf.clickgrid", true);
-            }
+		localStorage.setItem("ucaf.clickgrid", false);
 
-            cellOver(playable[0]);
-            playable[0].click();
-        }
+	}
 
-    }
+	if(document.location.href.indexOf("/member/paid_ads_view_") > -1){
+		if(autoClose===true){
+			$("#button").click(function(){
+
+				setTimeout(function(){
+					if($("#closeBtn")[0] !== undefined){
+						$("#closeBtn").click();
+						if(typeof(Storage) !== "undefined") {
+							localStorage.setItem("ucaf.reload", true);
+						}
+					}else{
+						if($("#playGridAgn")[0] !== undefined){
+							$("#playGridAgn").click();
+						}
+					}
+				},1000);
+			});
+		}
+
+		var timeout = $("#seconds").text();
+		if(timeout.indexOf("Second") > -1 ){
+			timeout = parseInt(timeout)*1000-1000;
+		}else{
+			timeout = 30000;
+		}
+		if(sound === true){
+			setTimeout(function() {
+
+				var snd = new Audio("http://uncertified-robot.github.io/UserScripts/sounds/"+alertSound); 
+				snd.play();
+			}, timeout);
+		}
+	}
+
+	if(document.location.href.indexOf("/member/games/grid.html") > -1){
+		var playable = $("td.playGameLink");
+		var chances = parseInt($(".chances")[0].innerText);
+		if(chances>=1){
+
+			if(typeof(Storage) !== "undefined") {
+				localStorage.setItem("ucaf.clickgrid", true);
+			}
+
+			cellOver(playable[0]);
+			playable[0].click();
+		}
+
+	}
 });
