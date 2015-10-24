@@ -7,12 +7,15 @@
 // @include     http://Uncertified-Robot.github.io/UserScripts/*
 // @copyright   2015+, Uncertified Robot
 // @namespace  https://github.com/Uncertified-Robot
-// @version    1.2.6.0
+// @version    1.2.6.1
 // @updateURL   https://raw.githubusercontent.com/Uncertified-Robot/UserScripts/master/Paidverts%20Autofiller.user.js
 // @downloadURL     https://raw.githubusercontent.com/Uncertified-Robot/UserScripts/master/Paidverts%20Autofiller.user.js
 // @grant GM_setValue
 // @grant GM_getValue
+// @grant GM_openInTab
+
 // @run-at document-end
+// @require http://code.jquery.com/jquery-latest.js
 // ==/UserScript==
 
 
@@ -140,8 +143,7 @@ $(document).ready(function(){
 			if($("#worth")[0]!==undefined){
 				document.getElementById('worth').scrollIntoView(true);
 				if(newTab===true){
-					var url = $('#view-1').attr("href");
-					var newWindow = window.open(url); 
+					GM_openInTab($("#view-1").attr("href"))
 				}else{
 					document.getElementById('view-1').dispatchEvent(evt);
 				}
