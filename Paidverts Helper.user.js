@@ -7,7 +7,7 @@
 // @include     http://Uncertified-Robot.github.io/UserScripts/*
 // @copyright   2015+, Uncertified Robot
 // @namespace  https://github.com/Uncertified-Robot
-// @version    1.2.6.1
+// @version    1.2.6.2
 // @updateURL   https://raw.githubusercontent.com/Uncertified-Robot/UserScripts/master/Paidverts%20Autofiller.user.js
 // @downloadURL     https://raw.githubusercontent.com/Uncertified-Robot/UserScripts/master/Paidverts%20Autofiller.user.js
 // @grant GM_setValue
@@ -158,12 +158,12 @@ $(document).ready(function(){
 
 	if(document.location.href.indexOf("paidverts.com/member/paid_ads_interaction") > -1 || document.location.href.indexOf("paidverts.com/member/activation_ad.html") > -1){
 		document.getElementById('copy-1').dispatchEvent(evt);
-		if(document.getElementById('copy-3') !== undefined){
+		if(document.getElementById('copy-3') !== null){
 
 			document.getElementById('copy-2').dispatchEvent(evt);
 			document.getElementById('copy-3').dispatchEvent(evt);
 		}
-		if(document.getElementById("text-3") !== undefined){
+		if(document.getElementById("text-3") !== null){
 			var viewBtn = document.getElementById("text-3");
 			viewBtn.scrollIntoView(true);
 		}
